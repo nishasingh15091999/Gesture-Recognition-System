@@ -1,0 +1,147 @@
++convex hull use kiya h outer edges ko find out krne ke liye yh outer most pixels ko find out krega aur boundry create kr deta h .
+Contours can be explained simply as a curve joining all the continuous points (along the boundary), having same color or intensity. The contours are a useful tool for shape analysis and object detection and recognition.
+
+For better accuracy, use binary images(black and white type images). So before finding contours, apply threshold or canny edge detection.finding contours is like finding white object from 
+black background. So remember, object to be found should be white and background should be black.
+	ret----> is our return variable..... we have used GuassianBlur(filter) use kiya filter krne ke liye mtlb noise remove krne ke liye to blur the image...phir hum BGR se RGB color mein convert krnege HSV(hue saturation vanlue ) ka use krke.
+kch value jo extra add ho gyi h ya kch pixels loss ho gyi h unhe solve krne ke liye hum morphological funtions use krte h woh h dilation aur erosion.. then again humne  GuassianBlur(filter) use kiya filter krne ke liye mtlb noise remove krne ke liye 
+abb hume contour find krne h.phir hum lambda function use krnge kyuki lambda function hmara anonamous function h.phr hum max.contour ke  upr aaek rectangle bnaenge.phr hum convex full sind krnge contour se.phr humne separate window le li h phr hum draw krnge contours ko
+comvexity defects find out krnge.abb hum defects ko calculate krnge.count_defect count krke btaega ktni fingers h window pr.formula is used cosine formula.then agr angle >=90 h toh circle draw hoga .phr aaek line draw krnge.abb hum defects count krnge ki 0 h toh kya hoga defect 
+1 h toh kya hoga defct ki value
+. mtlb 0--> 1 show krega
+1---> 2 show krega
+
+CONTOURS - can be explaned as the curve joining all the continuous points along the boundary which are having the same color or intensity . contours are the useful tool for shape analysis or object detection or object recognition.
+mtlb edges of hand strucuture
+
+we will find the threshold -> ret,thresh=cv2.threshold(gray_scale_img,threshold_value,max_value,typei.e=0)
+findcontours method hume value deta h countours ki aur hierarchy ki 
+contours,hierarchy=cv2.findContours(thresh,contour_retrieval_mode i.e cv2.RETR_TREE,contour_approximation_method i.e cv2.CHAIN_APPROX_NONE)
+HUE- you can select any color (0-360)
+SATURATION - amount of color(0-100%)
+VLUE - brightness of color(0-100%)
+hsv=cv2.cvtColor(frame,cv2.color_BGR2HSV)
+
+GUASSIAN BLUR - is nothing but using different-weight-kernel in both x&y direction.--> gblur=cv2.GuassianBlur(img,kernel(5,5),0)
+
+IMAGE FILTERING -
+
+As for one-dimensional signals, images also can be filtered with various low-pass filters (LPF), high-pass filters (HPF), etc. A LPF helps in removing noise, or blurring the image.
+ A HPF filters helps in finding edges in an image.
+(1) Averaging - cv2.blur() or cv2.boxFilter().
+(2) Gaussian Filtering- cv2.getGaussianKernel().
+(3) Median Filtering - cv2.medianBlur()
+(4) Bilateral Filtering - cv2.bilateralFilter()
+
+IMAGE EDGE DETECTION
+
+(1) sobel edge detection
+(2) laplacian
+(3) canny edge detection - 2 threshold maangta hai lower and higher. canny=cv2.Canny(img,[threshold(lower_value),(higher_value)]
+
+
+MORPHOLOGICAL FUNCTIONs- kch value jo extra add ho gyi h ya kch pixels loss ho gyi h unhe solve krne ke liye hum morphological funtions use krte h woh h dilation aur erosion.
+comvexity defects find out krnge.abb hum defects ko calculate krnge.count_defect count krke btaega ktni fingers h window  pr.
+convexity defect is a cavity in an object (blob, contour) segmented out from an image. 
+
+
+
+
+STEPS ----
+(1) Open Camera
+(2) Capture frames from the camera
+(3)  Get hand data from the rectangle sub window
+(4) Apply Gaussian blur
+(5) Change color-space from BGR -> HSV
+(6) Create a binary image with where white will be skin colors and rest is black
+(7) morphological functions - dilation--> add ; aur EROSION--> REMOVE use krnge ki jo kch extra add ho gya h ya kch remove OR LOSS  ho gya h usko solve krne ke liye use krnge
+(8) Kernel for morphological transformation-_(1) DILATION (2) EROSION
+(9)  Apply morphological transformations to filter out the background noise
+(10) kch jo add hui h aur remove hui h unhe bhi toh filter out krna h esiliye hum gussian blur use kr rhe h .....##### Apply Gaussian Blur and Threshold.
+(11) # Show threshold image
+(12)  # Find contours
+(13)  Find contour with maximum area..## area find krne ke lye lambda function ka use kr rhe h kyuki hme area pta nh h chota h ki bda h; aur iski jo values aaengi woh contour mein save 
+         hongi
+
+(14) Create bounding rectangle around the contour
+(15)  # Find convex hull
+        hull = cv2.convexHull(contour)
+////////////
+(16) # Draw contour
+(17)   # Find convexity defects
+(18)  # Use cosine rule to find angle of the far point from the start and end point i.e. the convex points (the finger # tips) for all defects # yhi count defect hume btaega ki kitni 
+fingers h hmari screeen pr
+yh use kr rhe ki agr hum apne angle ko chnge kr rhe h th kis angle mein chnge ho rha usse dekhta h. # esiliye use kr rhe hum
+
+(19)  # if angle > 90 draw a circle at the far point
+(20) # line ke points ko connect krne ke lye
+(21) ### defects ko count krnge abb hum
+        # Print number of fingers
+/
+(22) # Show required images
+(23)  # hstack-->horizontal stack show krega drawing aur crop_image ko aaek sth merge krke
+(24) # Close the camera if 'q' is pressed
+
+
+
+
+WHOLE WORKING OF THE PROJECT IN ENGLISH 
+
+firstly we will write the code for opening the camera 
+then we will capture the frames from the camera
+then we will make rectangle so that the hand will be seen in the rectngle itself
+then we will apply gaussian blur
+then we will change the color from BGR TO HSV ( HUE- you can select any color (0-360) , SATURATION - amount of color(0-100%) , VALUE - brightness of color(0-100%) ,hsv=cv2.cvtColor(frame,cv2.color_BGR2HSV))
+then will create binary image with where white will be skin colors and rest is black.
+Apply morphological transformations to filter out the background noise.nd we will use morphological functions to like dilation-add,erosion-remove --so that extra added things or removed or lossed things could be resolved/fetched
+now some of them which have removed we have to filter them also so for that we'll will use guassian blur and threshold .
+then we will make an separete threshold image window.
+then we will find the contours with max. area for this we will use lambda function bcz we dont nw whether our area is small or large .and whatever values we will get it will be stored directly in countours.
+then we will make recatngle around the countours.
+then we will find the outer edges for this it will firslty find out the outer pixels and will create boundary for this we will se CONVEX HULL.
+then we will try to find he convexity defect
+then we will use the cosine rule to find the angle  of the far points from the start and end point i.e. the convex points (the finger # tips) for all defects. this count defect will tell us that how many no. of fingers are there on the screen.
+and also for knowing when we are changing the angle then in which angle the changes are done.
+and if angle will be greater then 90 then the circle at the far point will be drawn
+then we will count the defects  and will print the no. of fingers showing 
+then the required images are shown 
+then the croped and drawed images are combined and are showed by using horizontal stack 
+then the camera will be closed when we will press q mean all the output windows willl be closed
+
+
+
+(!) gesture
+(2) contours
+(3) threshold 
+
+
+
+convex hull ke through edges fingers ki joint hui h 
+defects se hi no. f fingers count hongi . jb hum 1 finger dikha rhe toh toh one likh kr aarha kyu ki defect (0) h  . jse jse hum no. of
+fingers bdhaenge defects bdhnge aur woh hme show hoga red point se fingers ke gap ke beech mein ...toh finger ki counting bhi bhdhegi.
+defct=1 hoga toh TWO likh kr show hoga display pr mtkb 2 fingers h yh show hoga 
+
+Contours can be explained simply as a curve joining all the continuous points (along the boundary), having same color or intensity. The contours are a useful tool for shape analysis and 
+object detection and recognition.
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

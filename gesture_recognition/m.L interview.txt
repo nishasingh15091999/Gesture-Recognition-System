@@ -1,0 +1,15 @@
+pearson correlation coefficient 
+
+range (-1 to 1) 
+-1  = strong negative 
+1- strong possitive
+0- no correlation
+
+
+roc graph - hme confusion matrix bahut saari bnani pdti h esse bchne ke lye hum roc graph bnate h 
+roc graph provides simple way to summarise all of the information.. its a probability curve .
+jtna roc curve near hota h 1 ke utna hi roc apne model ko aur best consider krta h .
+ITS A GRAPH DRAWN BETWEEN true positive rates and the false positive rate at various thresholds. 
+TRUE POSSITIVE= TP/(TP+FN)                     FALSE POSSITIVE= FP/(FP+TN) i.e 1-SPEIFICITY
+
+Hum aase hi threshold incr. kr krke points nikalte jaenge  . then roc graph swill summarise all the confusion matrix that each threshold produced .
